@@ -1,0 +1,52 @@
+#include <iostream>
+#include <stack>
+#include<math.h>
+using namespace std;
+//case if more than one digit and seperated by space
+int calculate(int first, int second, char ch){
+    switch (ch){
+        case '+':
+           return first+second;
+           break;
+        case '-':
+           return first-second;
+           break;
+        case '*':
+           return first*second;
+           break;
+        case '/':
+           return first/second;
+           break;
+        case '^':
+            return pow(first,second);
+            break;
+    }
+}
+int evaluate(string expr){
+    stack <int> s;
+    int i=0, first,second;
+    //char ch;
+    while(expr[i]!='\0'){
+        if (expr[i]>='0' && expr[i]<='9'){
+            s.push(expr[i] - '0');
+            i++;
+        }
+        
+        else{
+            second=s.top();
+            s.pop();
+            first=s.top();
+            s.pop();
+            int x= calculate(first,second,expr[i]);
+            s.push(x);
+            i++;
+        }
+    }
+    return s.top();
+}
+int main() {
+    string expr;
+    cin>>expr;
+    cout<<evaluate(expr);
+    return 0;
+}
